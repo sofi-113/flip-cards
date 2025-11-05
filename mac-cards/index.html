@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MAC Карты - Психологическая игра</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        h1 {
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .deck {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .card {
+            width: 140px;
+            height: 200px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        /* Рубашка карты */
+        .card-front {
+            background-image: url('file:///C:/Users/klei6/Downloads/mac-cards/card-back.jpg');
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #654321;
+        }
+        
+        /* Лицевая сторона карты */
+        .card-back {
+            background-size: cover;
+            background-position: center;
+            transform: rotateY(180deg);
+            border: 2px solid #333;
+        }
+        
+        .instructions {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .counter {
+            color: white;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎴 MAC Карты - Психологическая игра</h1>
+        
+        <div class="instructions">
+            <p>👆 Нажимайте на карты, чтобы перевернуть их и увидеть вопросы</p>
+            <p>🔄 Нажмите повторно чтобы скрыть карту</p>
+        </div>
+        
+        <div class="counter">
+            Карт в колоде: <span id="cardCount">50</span>
+        </div>
+        
+        <div class="deck" id="deck">
+            <!-- Карты появятся здесь автоматически -->
+        </div>
+    </div>
+
+    <script>
+        // Создаем 50 карт
+        const totalCards = 50;
+        
+        // Создаем карты когда страница загрузится
+        document.addEventListener('DOMContentLoaded', function() {
+            const deck = document.getElementById('deck');
+            const cardCountElement = document.getElementById('cardCount');
+            
+            // Обновляем счетчик
+            cardCountElement.textContent = totalCards;
+            
+            // Создаем все карты
+            for (let i = 1; i <= totalCards; i++) {
+                // Создаем элемент карты
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.setAttribute('data-card-id', i);
+                
+                // Путь к лицевой стороне карты
+                const cardImagePath = file:///C:/Users/klei6/Downloads/mac-cards/${i}.jpg;
+                
+                // Добавляем HTML для карты
+                cardElement.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front"></div>
+<div class="card-back" style="background-image: url('${cardImagePath}')"></div>
+                    </div>
+                `;
+                
+                // Добавляем обработчик клика
+                cardElement.addEventListener('click', function() {
+                    this.classList.toggle('flipped');
+                });
+                
+                // Добавляем карту в колоду
+                deck.appendChild(cardElement);
+            }
+        });
+    </script>
+</body>
+</html>
